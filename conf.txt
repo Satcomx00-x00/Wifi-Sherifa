@@ -1,0 +1,96 @@
+ip dhcp pool Bornes
+network 10.6.0.0 255.255.255.0
+default-router 10.6.0.254
+
+ip dhcp pool WADMIN
+network 10.11.0.0 255.255.255.0
+default-router 10.11.0.254
+
+ip dhcp pool WEMP
+network 10.12.0.0 255.255.255.0
+default-router 10.12.0.254
+
+ip dhcp pool Actifs
+network 10.5.1.0 255.255.255.0
+default-router 10.5.0.254
+
+ip dhcp pool WLC
+network 10.3.1.0 255.255.255.0
+default-router 10.3.1.254
+
+ip dhcp pool Management
+network 10.2.1.0 255.255.255.0
+default-router 10.2.1.254
+
+int g0/0/0.2
+ip address 10.2.1.254 255.255.255.0
+no shut
+int g0/0/0.3
+ip address 10.3.1.254 255.255.255.0
+ip address dhcp
+no shut
+int g0/0/0.5
+ip address 10.5.0.254 255.255.255.0
+ip address dhcp
+no shut
+int g0/0/0.6
+ip address 10.6.0.254 255.255.255.0
+ip address dhcp
+no shut
+int g0/0/0.11
+ip address 10.11.0.254 255.255.255.0
+ip address dhcp
+no shut
+int g0/0/0.12
+ip address 10.12.0.254 255.255.255.0
+ip address dhcp
+no shut
+
+interface Vlan 1
+ no ip address
+ shutdown
+!
+interface Vlan 2
+ ip address 10.2.0.254 255.255.255.0
+ ip helper-address 10.2.1.254
+!
+interface Vlan 3
+ ip address 10.3.0.254 255.255.0.0
+!
+interface Vlan 5
+ ip address 10.5.0.254 255.255.0.0
+!
+interface Vlan 6
+ mac-address 00e0.a3c3.8202
+ ip address 10.6.0.254 255.255.0.0
+!
+interface Vlan 11
+ mac-address 00e0.a3c3.8204
+ ip address 10.11.0.254 255.255.0.0
+!
+interface Vlan 12
+ mac-address 00e0.a3c3.8205
+ ip address 10.12.0.254 255.255.0.0
+ 
+ 
+ 
+ 
+ 
+
+SW-1(config-if)#switchport access vlan 2
+SW-1(config-if)#switchport trunk encapsulation dot1q 
+SW-1(config-if)#switchport mode access 
+SW-1(config-if)#switchport nonegotiate 
+
+
+int range g1/0/11-14
+no switchport access vlan 6
+switchport trunk native vlan 6
+switchport trunk encapsulation dot1q 
+switchport mode trunk 
+
+
+
+
+
+
